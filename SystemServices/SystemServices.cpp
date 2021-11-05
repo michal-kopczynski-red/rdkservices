@@ -1340,6 +1340,17 @@ namespace WPEFramework {
             {
                 LOGERR("exception in getFirmwareUpdateInfo %s", e.what());
                 response["asyncResponse"] = false;
+
+                std::system("systemctl show -p TasksCurrent wpeframework >> /opt/logs/wpeframework.log");
+                std::system("ps huH p `pidof /usr/bin/WPEFramework` | wc -l >> /opt/logs/wpeframework.log");
+                std::system("ls -l /proc/`pidof /usr/bin/WPEFramework`/fd/ | wc -l >> /opt/logs/wpeframework.log");
+                std::system("lsof -p `pidof /usr/bin/WPEFramework` | wc -l >> /opt/logs/wpeframework.log");
+                std::system("lsof -u root |wc -l >> /opt/logs/wpeframework.log");
+                std::system("ls -1d /proc/*/task/* | wc -l >> /opt/logs/wpeframework.log");
+                std::system("ps aux | wc -l >> /opt/logs/wpeframework.log");
+                std::system("ps -elfT | wc -l >> /opt/logs/wpeframework.log");
+                std::system("ps -U root | wc -l >> /opt/logs/wpeframework.log");
+                std::system("cat /proc/sys/fs/file-nr >> /opt/logs/wpeframework.log");
                 returnResponse(false);
             }
         } // get FirmwareUpdateInfo
